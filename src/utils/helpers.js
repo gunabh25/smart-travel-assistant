@@ -1,3 +1,4 @@
+/* eslint-disable import/no-anonymous-default-export */
 // Utility functions for the Smart Travel Assistant
 
 // Distance calculation between two coordinates
