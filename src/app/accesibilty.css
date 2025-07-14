@@ -1,0 +1,195 @@
+/* Accessibility Styles */
+
+/* High Contrast Mode */
+.high-contrast {
+  --bg-primary: #000000;
+  --bg-secondary: #ffffff;
+  --text-primary: #ffffff;
+  --text-secondary: #000000;
+  --border-color: #ffffff;
+  --accent-color: #ffff00;
+}
+
+.high-contrast * {
+  background-color: var(--bg-primary) !important;
+  color: var(--text-primary) !important;
+  border-color: var(--border-color) !important;
+}
+
+.high-contrast button,
+.high-contrast input,
+.high-contrast select,
+.high-contrast textarea {
+  background-color: var(--bg-secondary) !important;
+  color: var(--text-secondary) !important;
+  border: 2px solid var(--border-color) !important;
+}
+
+.high-contrast a {
+  color: var(--accent-color) !important;
+  text-decoration: underline !important;
+}
+
+/* Reduced Motion */
+.reduced-motion *,
+.reduced-motion *::before,
+.reduced-motion *::after {
+  animation-duration: 0.01ms !important;
+  animation-iteration-count: 1 !important;
+  transition-duration: 0.01ms !important;
+  scroll-behavior: auto !important;
+}
+
+/* Color Blind Support */
+.colorblind-deuteranopia {
+  filter: url(#deuteranopia-filter);
+}
+
+.colorblind-protanopia {
+  filter: url(#protanopia-filter);
+}
+
+.colorblind-tritanopia {
+  filter: url(#tritanopia-filter);
+}
+
+/* Cursor Sizes */
+.cursor-large * {
+  cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" fill="%23000"/></svg>') 12 12, auto !important;
+}
+
+.cursor-xl * {
+  cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32"><path d="M16 4l4.12 8.35L32 14.36l-6.67 6.49L27 32l-8.24-4.33L16 32l-2.76-4.33L5 32l1.67-11.15L0 14.36l11.88-2.01L16 4z" fill="%23000"/></svg>') 16 16, auto !important;
+}
+
+/* Enhanced Focus Indicators */
+.enhanced-focus *:focus {
+  outline: 3px solid #4F46E5 !important;
+  outline-offset: 2px !important;
+  box-shadow: 0 0 0 2px rgba(79, 70, 229, 0.3) !important;
+}
+
+.enhanced-focus button:focus,
+.enhanced-focus input:focus,
+.enhanced-focus select:focus,
+.enhanced-focus textarea:focus {
+  outline: 3px solid #4F46E5 !important;
+  outline-offset: 2px !important;
+  box-shadow: 0 0 0 2px rgba(79, 70, 229, 0.3) !important;
+}
+
+.enhanced-focus a:focus {
+  outline: 3px solid #4F46E5 !important;
+  outline-offset: 2px !important;
+  background-color: rgba(79, 70, 229, 0.1) !important;
+}
+
+/* Keyboard Navigation */
+.keyboard-navigation *:focus {
+  outline: 2px solid #4F46E5 !important;
+  outline-offset: 1px !important;
+}
+
+.keyboard-navigation button:focus,
+.keyboard-navigation input:focus,
+.keyboard-navigation select:focus,
+.keyboard-navigation textarea:focus {
+  box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.3) !important;
+}
+
+/* Screen Reader Only */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* Skip Link */
+.skip-link {
+  position: absolute;
+  top: -40px;
+  left: 6px;
+  background: #000;
+  color: #fff;
+  padding: 8px;
+  text-decoration: none;
+  z-index: 100;
+}
+
+.skip-link:focus {
+  top: 6px;
+}
+
+/* Font Size Scaling */
+:root {
+  --base-font-size: 16px;
+}
+
+html {
+  font-size: var(--base-font-size);
+}
+
+/* Slider Styling */
+.slider::-webkit-slider-thumb {
+  appearance: none;
+  height: 20px;
+  width: 20px;
+  border-radius: 50%;
+  background: #4F46E5;
+  cursor: pointer;
+  box-shadow: 0 0 2px 0 #555;
+}
+
+.slider::-moz-range-thumb {
+  height: 20px;
+  width: 20px;
+  border-radius: 50%;
+  background: #4F46E5;
+  cursor: pointer;
+  border: none;
+  box-shadow: 0 0 2px 0 #555;
+}
+
+/* High Contrast Slider */
+.high-contrast .slider::-webkit-slider-thumb {
+  background: #ffff00;
+}
+
+.high-contrast .slider::-moz-range-thumb {
+  background: #ffff00;
+}
+
+/* Color Blind Filters */
+.colorblind-filters {
+  position: absolute;
+  width: 0;
+  height: 0;
+  overflow: hidden;
+}
+
+/* Animations for reduced motion users */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Print Styles */
+@media print {
+  .skip-link,
+  .accessibility-toggle,
+  .accessibility-panel {
+    display: none !important;
+  }
+}
