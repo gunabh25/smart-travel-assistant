@@ -1,10 +1,10 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Bell, X, CheckCircle, AlertTriangle, Info } from 'lucide-react';
+import { X, Bell, CheckCircle, AlertCircle, Info, AlertTriangle } from 'lucide-react';
 
-export default function NotificationManager() {
+const NotificationManager = () => {
   const [notifications, setNotifications] = useState([]);
   const [permission, setPermission] = useState('default');
 
@@ -15,14 +15,14 @@ export default function NotificationManager() {
     }
 
     // Listen for custom notification events
-    const handleNotification = (event) => {
+    const handleCustomNotification = (event) => {
       addNotification(event.detail);
     };
 
-    window.addEventListener('show-notification', handleNotification);
+    window.addEventListener('customNotification', handleCustomNotification);
     
     return () => {
-      window.removeEventListener('show-notification', handleNotification);
+      window.removeEventListener('customNotification', handleCustomNotification);
     };
   }, []);
 
@@ -35,14 +35,14 @@ export default function NotificationManager() {
         addNotification({
           type: 'success',
           title: 'Notifications Enabled',
-          message: 'You\'ll now receive travel updates and location alerts!'
+          message: 'You will now receive travel updates and alerts.'
         });
       }
     }
   };
 
   const addNotification = (notification) => {
-    const id = Date.now();
+    const id = Date.now() + Math.random();
     const newNotification = {
       id,
       type: notification.type || 'info',
@@ -64,7 +64,7 @@ export default function NotificationManager() {
       new Notification(newNotification.title, {
         body: newNotification.message,
         icon: '/icon-192x192.png',
-        tag: `notification-${id}`
+        badge: '/icon-192x192.png'
       });
     }
   };
@@ -75,21 +75,36 @@ export default function NotificationManager() {
 
   const getIcon = (type) => {
     switch (type) {
-      case 'success': return <CheckCircle className="w-5 h-5 text-green-500" />;
-      case 'warning': return <AlertTriangle className="w-5 h-5 text-yellow-500" />;
-      case 'error': return <AlertTriangle className="w-5 h-5 text-red-500" />;
-      default: return <Info className="w-5 h-5 text-blue-500" />;
+      case 'success':
+        return <CheckCircle className="w-5 h-5 text-green-500" />;
+      case 'error':
+        return <AlertCircle className="w-5 h-5 text-red-500" />;
+      case 'warning':
+        return <AlertTriangle className="w-5 h-5 text-yellow-500" />;
+      default:
+        return <Info className="w-5 h-5 text-blue-500" />;
     }
   };
 
-  const getColors = (type) => {
+  const getColorClasses = (type) => {
     switch (type) {
-      case 'success': return 'bg-green-50 border-green-200';
-      case 'warning': return 'bg-yellow-50 border-yellow-200';
-      case 'error': return 'bg-red-50 border-red-200';
-      default: return 'bg-blue-50 border-blue-200';
+      case 'success':
+        return 'bg-green-500/10 border-green-500/20 text-green-100';
+      case 'error':
+        return 'bg-red-500/10 border-red-500/20 text-red-100';
+      case 'warning':
+        return 'bg-yellow-500/10 border-yellow-500/20 text-yellow-100';
+      default:
+        return 'bg-blue-500/10 border-blue-500/20 text-blue-100';
     }
   };
+
+  // Global notification function
+  useEffect(() => {
+    window.showNotification = (notification) => {
+      addNotification(notification);
+    };
+  }, []);
 
   return (
     <>
@@ -98,62 +113,60 @@ export default function NotificationManager() {
         <motion.div
           initial={{ opacity: 0, y: -50 }}
           animate={{ opacity: 1, y: 0 }}
-          className="fixed top-4 right-4 z-50 bg-white rounded-lg shadow-lg p-4 max-w-sm border"
+          className="fixed top-4 left-4 right-4 z-50 md:left-auto md:right-4 md:w-96"
         >
-          <div className="flex items-start space-x-3">
-            <Bell className="w-5 h-5 text-blue-500 mt-0.5" />
-            <div className="flex-1">
-              <h4 className="font-medium text-gray-800">Enable Notifications</h4>
-              <p className="text-sm text-gray-600 mt-1">
-                Get travel updates and location alerts
-              </p>
-              <div className="flex space-x-2 mt-3">
-                <button
-                  onClick={requestPermission}
-                  className="px-3 py-1 bg-blue-500 text-white text-sm rounded hover:bg-blue-600 transition-colors"
-                >
-                  Enable
-                </button>
-                <button
-                  onClick={() => setPermission('denied')}
-                  className="px-3 py-1 bg-gray-200 text-gray-700 text-sm rounded hover:bg-gray-300 transition-colors"
-                >
-                  Maybe Later
-                </button>
-              </div>
+          <div className="bg-white/10 backdrop-blur-md rounded-2xl p-4 border border-white/20">
+            <div className="flex items-center gap-3 mb-3">
+              <Bell className="w-5 h-5 text-yellow-500" />
+              <h3 className="text-white font-semibold">Enable Notifications</h3>
+            </div>
+            <p className="text-white/70 text-sm mb-4">
+              Get notified about travel updates, location changes, and important alerts.
+            </p>
+            <div className="flex gap-2">
+              <button
+                onClick={requestPermission}
+                className="flex-1 bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded-xl font-medium transition-colors"
+              >
+                Allow
+              </button>
+              <button
+                onClick={() => setPermission('denied')}
+                className="flex-1 bg-white/20 hover:bg-white/30 text-white py-2 px-4 rounded-xl font-medium transition-colors"
+              >
+                Not Now
+              </button>
             </div>
           </div>
         </motion.div>
       )}
 
-      {/* Notification List */}
-      <div className="fixed top-4 right-4 z-40 max-w-sm space-y-2">
+      {/* Notifications Container */}
+      <div className="fixed top-4 right-4 z-50 w-96 max-w-[calc(100vw-2rem)] space-y-3">
         <AnimatePresence>
           {notifications.map((notification) => (
             <motion.div
               key={notification.id}
-              initial={{ opacity: 0, x: 300, scale: 0.8 }}
+              initial={{ opacity: 0, x: 300, scale: 0.95 }}
               animate={{ opacity: 1, x: 0, scale: 1 }}
-              exit={{ opacity: 0, x: 300, scale: 0.8 }}
+              exit={{ opacity: 0, x: 300, scale: 0.95 }}
               transition={{ duration: 0.3 }}
-              className={`${getColors(notification.type)} border rounded-lg p-4 shadow-lg backdrop-blur-sm`}
+              className={`backdrop-blur-md rounded-2xl p-4 border ${getColorClasses(notification.type)}`}
             >
-              <div className="flex items-start space-x-3">
+              <div className="flex items-start gap-3">
                 {getIcon(notification.type)}
                 <div className="flex-1 min-w-0">
-                  <h4 className="font-medium text-gray-800 truncate">
-                    {notification.title}
-                  </h4>
-                  <p className="text-sm text-gray-600 mt-1 line-clamp-2">
-                    {notification.message}
-                  </p>
-                  <p className="text-xs text-gray-500 mt-2">
+                  <h4 className="font-semibold text-sm">{notification.title}</h4>
+                  {notification.message && (
+                    <p className="text-sm opacity-90 mt-1">{notification.message}</p>
+                  )}
+                  <p className="text-xs opacity-70 mt-2">
                     {notification.timestamp.toLocaleTimeString()}
                   </p>
                 </div>
                 <button
                   onClick={() => removeNotification(notification.id)}
-                  className="text-gray-400 hover:text-gray-600 transition-colors"
+                  className="p-1 hover:bg-white/20 rounded-lg transition-colors"
                 >
                   <X className="w-4 h-4" />
                 </button>
@@ -164,10 +177,6 @@ export default function NotificationManager() {
       </div>
     </>
   );
-}
-
-// Helper function to trigger notifications from other components
-export const showNotification = (notification) => {
-  const event = new CustomEvent('show-notification', { detail: notification });
-  window.dispatchEvent(event);
 };
+
+export default NotificationManager;
