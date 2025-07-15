@@ -58,8 +58,8 @@ module.exports = {
           '50%': { transform: 'translateY(-20px)' },
         },
       },
-      backdropBlur: {
-        xs: '2px',
+      blur: {
+        xs: '2px', // Enables `blur-xs` and `backdrop-blur-xs`
       },
     },
   },
