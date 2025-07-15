@@ -1,13 +1,13 @@
-@import "tailwindcss/preflight";
-@import "tailwindcss/utilities";
-@import "tailwindcss/base";
-
+/* globals.css */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
 @layer base {
   html {
     scroll-behavior: smooth;
   }
-  
+
   body {
     @apply antialiased;
   }
@@ -17,35 +17,35 @@
   .glass-effect {
     @apply backdrop-blur-md bg-white/20 border border-white/30 shadow-lg;
   }
-  
+
   .card-hover {
     @apply transition-all duration-300 hover:shadow-xl hover:-translate-y-2;
   }
-  
+
   .gradient-text {
     @apply bg-gradient-to-r from-primary-600 to-secondary-600 bg-clip-text text-transparent;
   }
-  
+
   .loading-spinner {
     @apply animate-spin rounded-full h-8 w-8 border-b-2 border-primary-600;
   }
-  
+
   .hero-background {
     background: linear-gradient(135deg, #0ea5e9 0%, #d946ef 100%);
   }
-  
+
   .connection-indicator {
     @apply fixed top-4 right-4 z-50 px-3 py-1 rounded-full text-sm font-medium;
   }
-  
+
   .connection-online {
     @apply bg-green-500 text-white;
   }
-  
+
   .connection-offline {
     @apply bg-red-500 text-white;
   }
-  
+
   .connection-slow {
     @apply bg-yellow-500 text-white;
   }
@@ -55,7 +55,7 @@
   .text-shadow {
     text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
   }
-  
+
   .text-shadow-lg {
     text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
   }

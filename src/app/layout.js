@@ -6,6 +6,7 @@ import NetworkStatus from '../components/NetworkStatus';
 const inter = Inter({ subsets: ['latin'] });
 
 export const metadata = {
+  metadataBase: new URL('https://smart-travel-assistant.com'), // ✅ FIXED
   title: 'Smart Travel Assistant',
   description:
     'Your intelligent travel companion for exploring nearby places with real-time location tracking and offline capabilities.',
@@ -52,19 +53,20 @@ export const metadata = {
   },
 };
 
-
 export const viewport = {
   width: 'device-width',
   initialScale: 1,
   maximumScale: 1,
   userScalable: 'no',
-  themeColor: '#0ea5e9', 
+  themeColor: '#0ea5e9',
 };
 
 export default function RootLayout({ children }) {
   return (
     <html lang="en" className="scroll-smooth">
-      <body className={`${inter.className} bg-gradient-to-br from-primary-50 to-secondary-50 min-h-screen`}>
+      <body
+        className={`${inter.className} bg-gradient-to-br from-primary-50 to-secondary-50 min-h-screen`}
+      >
         <PWAManifest />
         <NetworkStatus />
         {children}
