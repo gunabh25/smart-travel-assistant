@@ -51,7 +51,7 @@ class ErrorBoundary extends Component {
             </h1>
 
             <p className="text-gray-600 mb-6">
-              We encountered an unexpected error. Don't worry, this happens sometimes!
+              We encountered an unexpected error. Don&apos;t worry, this happens sometimes!
             </p>
 
             <div className="space-y-4">
