@@ -89,3 +89,39 @@
   background: linear-gradient(to right, #f6f7f8 0%, #edeef1 20%, #f6f7f8 40%, #f6f7f8 100%);
   background-size: 800px 104px;
 }
+
+/* 🔮 Glowing glass effect */
+.glass-effect-glow {
+  @apply backdrop-blur-md bg-white/20 border border-white/30 shadow-lg relative;
+}
+
+.glass-effect-glow::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 2px;
+  background: linear-gradient(135deg, #0ea5e9, #d946ef);
+  mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  -webkit-mask-composite: destination-out;
+  mask-composite: exclude;
+  pointer-events: none;
+  z-index: -1;
+}
+
+/* Gradient heading */
+.gradient-text {
+  @apply bg-gradient-to-r from-primary-600 to-secondary-600 bg-clip-text text-transparent;
+}
+
+.text-assistant-gradient {
+  background: linear-gradient(90deg, #f9d423, #ff4e50, #f78ca0);
+  -webkit-background-clip: text;
+  background-clip: text; 
+  -webkit-text-fill-color: transparent;
+  font-weight: 800;
+  text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.25);
+}
+

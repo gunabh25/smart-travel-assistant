@@ -16,17 +16,14 @@ export default function Home() {
   const [nearbyPlaces, setNearbyPlaces] = useState([]);
 
   useEffect(() => {
-    // Simulate initial loading
     const timer = setTimeout(() => {
       setIsLoading(false);
     }, 2000);
-
     return () => clearTimeout(timer);
   }, []);
 
   const handleLocationUpdate = (location) => {
     setCurrentLocation(location);
-    // Generate mock nearby places based on location
     const mockPlaces = [
       {
         id: 1,
@@ -80,7 +77,7 @@ export default function Home() {
     <div className="relative">
       <ThreeJsBackground />
       <BackgroundSync />
-      
+
       <motion.main
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
@@ -88,24 +85,27 @@ export default function Home() {
         className="relative z-10"
       >
         <LocationTracker onLocationUpdate={handleLocationUpdate} />
-        
+
         <Hero />
-        
+
         <section className="py-16 px-4">
           <div className="max-w-7xl mx-auto">
             <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.3 }}
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8, ease: 'easeOut' }}
               className="text-center mb-12"
             >
-              <h2 className="text-4xl font-bold gradient-text mb-4">
-                Explore Your Surroundings
-              </h2>
-              <p className="text-gray-600 text-lg max-w-2xl mx-auto">
-                Discover amazing places near you with real-time location tracking
-                and personalized recommendations.
-              </p>
+              <div className="glass-effect-glow max-w-3xl mx-auto p-8 rounded-2xl shadow-xl transition-transform duration-300 hover:scale-105">
+                <h2 className="text-5xl font-extrabold text-assistant-gradient mb-4">
+                  Explore Your Surroundings
+                </h2>
+                <p className="text-white text-lg">
+                  Discover amazing places near you with real-time location tracking
+                  and personalized recommendations.
+                </p>
+              </div>
             </motion.div>
 
             <div className="grid lg:grid-cols-2 gap-8 mb-16">
@@ -114,12 +114,12 @@ export default function Home() {
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ duration: 0.6, delay: 0.4 }}
               >
-                <MapComponent 
+                <MapComponent
                   currentLocation={currentLocation}
                   nearbyPlaces={nearbyPlaces}
                 />
               </motion.div>
-              
+
               <motion.div
                 initial={{ opacity: 0, x: 20 }}
                 animate={{ opacity: 1, x: 0 }}
